@@ -18,14 +18,25 @@ from detectron2.checkpoint import DetectionCheckpointer
 from detectron2.data.datasets import register_coco_instances
 from detectron2.data import DatasetCatalog
 
-configuration = get_model_configuration()
-model = VGTTrainer.build_model(configuration)
-DetectionCheckpointer(model, save_dir=configuration.OUTPUT_DIR).resume_or_load(configuration.MODEL.WEIGHTS, resume=True)
+# Global variables for lazy loading
+_model = None
+_configuration = None
 
+def get_model_and_config():
+    """Lazy load the model and configuration when first needed"""
+    global _model, _configuration
+    if _model is None:
+        service_logger.info("Loading VGT model and configuration...")
+        _configuration = get_model_configuration()
+        _model = VGTTrainer.build_model(_configuration)
+        DetectionCheckpointer(_model, save_dir=_configuration.OUTPUT_DIR).resume_or_load(
+            _configuration.MODEL.WEIGHTS, resume=True
+        )
+        service_logger.info("VGT model loaded successfully")
+    return _model, _configuration
 
 def get_file_path(file_name, extension):
     return join(tempfile.gettempdir(), file_name + "." + extension)
-
 
 def pdf_content_to_pdf_path(file_content):
     file_id = str(uuid.uuid1())
@@ -35,7 +46,6 @@ def pdf_content_to_pdf_path(file_content):
 
     return pdf_path
 
-
 def register_data():
     try:
         DatasetCatalog.remove("predict_data")
@@ -44,15 +54,14 @@ def register_data():
 
     register_coco_instances("predict_data", {}, JSON_TEST_FILE_PATH, IMAGES_ROOT_PATH)
 
-
 def predict_doclaynet():
+    model, configuration = get_model_and_config()  # Get model lazily
     register_data()
     VGTTrainer.test(configuration, model)
 
-
 def analyze_pdf(file: AnyStr, xml_file_name: str, extraction_format: str = "", keep_pdf: bool = False) -> list[dict]:
     pdf_path = pdf_content_to_pdf_path(file)
-    service_logger.info(f"Creating PDF images")
+    service_logger.info("Creating PDF images")
     pdf_images_list: list[PdfImages] = [PdfImages.from_pdf_path(pdf_path, "", xml_file_name)]
     create_word_grid([pdf_images.pdf_features for pdf_images in pdf_images_list])
     get_annotations(pdf_images_list)
@@ -71,7 +80,6 @@ def analyze_pdf(file: AnyStr, xml_file_name: str, extraction_format: str = "", k
         SegmentBox.from_pdf_segment(pdf_segment, pdf_images_list[0].pdf_features.pages).to_dict()
         for pdf_segment in predicted_segments
     ]
-
 
 def remove_files():
     PdfImages.remove_images()

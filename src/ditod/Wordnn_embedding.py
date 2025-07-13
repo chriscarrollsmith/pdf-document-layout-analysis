@@ -23,7 +23,7 @@ class WordnnEmbedding(nn.Module):
         vocab_size=30552,
         hidden_size=768,
         embedding_dim=64,
-        bros_embedding_path="/bros-base-uncased/",
+        bros_embedding_path="/models/layoutlm-base-uncased/",  # Use absolute path
         use_pretrain_weight=True,
         use_UNK_text=False,
     ):
@@ -33,29 +33,38 @@ class WordnnEmbedding(nn.Module):
             embedding_dim (int): dim of input features
         """
         super().__init__()
-
+        
         self.embedding = nn.Embedding(vocab_size, hidden_size)
         self.embedding_proj = nn.Linear(hidden_size, embedding_dim, bias=False)
-        # self.tokenizer = BrosTokenizer.from_pretrained(bros_embedding_path)
         self.use_pretrain_weight = use_pretrain_weight
         self.use_UNK_text = use_UNK_text
-
-        self.init_weights(bros_embedding_path)
+        self.bros_embedding_path = bros_embedding_path
+        self.weights_loaded = False  # Track if weights are loaded
+        
         self.apply(_init_weights)
 
-    def init_weights(self, bros_embedding_path):
-        if self.use_pretrain_weight:
-            state_dict = torch.load(bros_embedding_path + "pytorch_model.bin", map_location="cpu")
-            if "bert" in bros_embedding_path:
-                word_embs = state_dict["bert.embeddings.word_embeddings.weight"]
-            elif "bros" in bros_embedding_path:
-                word_embs = state_dict["embeddings.word_embeddings.weight"]
-            elif "layoutlm" in bros_embedding_path:
-                word_embs = state_dict["layoutlm.embeddings.word_embeddings.weight"]
-            else:
-                print("Wrong bros_embedding_path!")
-            self.embedding = nn.Embedding.from_pretrained(word_embs)
-            print("use_pretrain_weight: load model from:", bros_embedding_path)
+    def _load_weights(self):
+        """Lazily load weights when needed"""
+        if not self.use_pretrain_weight or self.weights_loaded:
+            return
+            
+        print(f"Loading weights from {self.bros_embedding_path}")
+        state_dict = torch.load(
+            self.bros_embedding_path + "pytorch_model.bin", 
+            map_location="cpu"
+        )
+        
+        if "bert" in self.bros_embedding_path:
+            word_embs = state_dict["bert.embeddings.word_embeddings.weight"]
+        elif "bros" in self.bros_embedding_path:
+            word_embs = state_dict["embeddings.word_embeddings.weight"]
+        elif "layoutlm" in self.bros_embedding_path:
+            word_embs = state_dict["layoutlm.embeddings.word_embeddings.weight"]
+        else:
+            raise ValueError(f"Unsupported model path: {self.bros_embedding_path}")
+        
+        self.embedding.load_state_dict({"weight": word_embs})
+        self.weights_loaded = True
 
     def forward(self, img, batched_inputs, stride=1):
         """Forward computation
@@ -65,6 +74,9 @@ class WordnnEmbedding(nn.Module):
         Returns:
             Tensor: in shape of [B x N x L x D], where D is the embedding_dim.
         """
+        if not self.weights_loaded:
+            self._load_weights()
+
         device = img.device
         batch_b, _, batch_h, batch_w = img.size()
 
