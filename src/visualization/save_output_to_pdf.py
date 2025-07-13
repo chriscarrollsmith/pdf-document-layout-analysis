@@ -1,7 +1,7 @@
 from os import makedirs
 from os.path import join
 from pdf_annotate import PdfAnnotator, Location, Appearance
-from ..configuration import ROOT_PATH
+from ..configuration import PDF_OUTPUTS_PATH
 
 DOCLAYNET_COLOR_BY_TYPE = {
     "Caption": "#FFC300",
@@ -59,7 +59,7 @@ def save_output(annotator: PdfAnnotator, output_pdf_path: str):
 
 
 def save_output_to_pdf(pdf_path: str, segment_boxes: list[dict]):
-    pdf_outputs_path = join(ROOT_PATH, f"pdf_outputs")
+    pdf_outputs_path = PDF_OUTPUTS_PATH
     makedirs(pdf_outputs_path, exist_ok=True)
     annotator = PdfAnnotator(str(pdf_path))
     segment_index = 0

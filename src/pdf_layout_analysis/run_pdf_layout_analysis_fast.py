@@ -10,7 +10,7 @@ from ..pdf_layout_analysis.run_pdf_layout_analysis import pdf_content_to_pdf_pat
 from ..pdf_tokens_type_trainer.TokenTypeTrainer import TokenTypeTrainer
 from ..pdf_tokens_type_trainer.ModelConfiguration import ModelConfiguration
 
-from ..configuration import ROOT_PATH, service_logger
+from ..configuration import MODELS_PATH, service_logger
 from ..data_model.SegmentBox import SegmentBox
 
 
@@ -23,12 +23,12 @@ def analyze_pdf_fast(
     pdf_images = PdfImages.from_pdf_path(pdf_path=pdf_path, pdf_name="", xml_file_name=xml_file_name)
 
     token_type_trainer = TokenTypeTrainer([pdf_images.pdf_features], ModelConfiguration())
-    token_type_trainer.set_token_types(join(ROOT_PATH, "models", "token_type_lightgbm.model"))
+    token_type_trainer.set_token_types(join(MODELS_PATH, "token_type_lightgbm.model"))
 
     trainer = ParagraphExtractorTrainer(
         pdfs_features=[pdf_images.pdf_features], model_configuration=PARAGRAPH_EXTRACTION_CONFIGURATION
     )
-    segments = trainer.get_pdf_segments(join(ROOT_PATH, "models", "paragraph_extraction_lightgbm.model"))
+    segments = trainer.get_pdf_segments(join(MODELS_PATH, "paragraph_extraction_lightgbm.model"))
 
     extract_formula_format(pdf_images, segments)
     if extraction_format:

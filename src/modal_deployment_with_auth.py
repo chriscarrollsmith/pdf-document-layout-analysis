@@ -1,10 +1,11 @@
 import modal
+from .configuration import MODELS_PATH, PERSISTED_VOLUME_PATH
 
 # Create the Modal app
 app = modal.App("pdf-document-layout-analysis-secure")
 
 # Create volumes for persistent storage
-models_volume = modal.Volume.from_name("pdf-analysis-models", create_if_missing=True)
+persisted_volume = modal.Volume.from_name("pdf-analysis-storage", create_if_missing=True)
 
 # Build the image from your existing Dockerfile
 image = (
@@ -29,7 +30,7 @@ image = (
     image=image,
     gpu="A10G",
     volumes={
-        "/models": models_volume
+        PERSISTED_VOLUME_PATH: persisted_volume
     },
     timeout=3600,
     scaledown_window=300,
@@ -44,17 +45,14 @@ def fastapi_app():
     import os
     from fastapi import FastAPI, HTTPException, Request
     from fastapi.middleware.cors import CORSMiddleware
-
-    from .download_models import download_models
+    from .download_models import are_models_downloaded
     
     # Download models if needed - this will run on first container startup
     print("Checking if models need to be downloaded...")
-    if not os.path.exists("/models") or not os.listdir("/models"):
+    if not are_models_downloaded():
         print("Models not found, downloading...")
-        download_models("doclaynet")
+        download_models.remote()
         print("Models downloaded successfully")
-        # Commit the models to the volume so other containers can use them
-        models_volume.commit()
     else:
         print("Models already available")
     
@@ -90,7 +88,7 @@ def fastapi_app():
         expected_key = os.environ.get("API_KEY")
         
         if expected_key and (not api_key or api_key != expected_key):
-            return HTTPException(
+            raise HTTPException(
                 status_code=401,
                 detail="Invalid or missing API key"
             )
@@ -108,23 +106,24 @@ def fastapi_app():
         return {
             "status": "healthy",
             "gpu_available": torch.cuda.is_available(),
-            "models_loaded": os.path.exists("/app/models") and bool(os.listdir("/app/models"))
+            "models_loaded": are_models_downloaded()
         }
     
     return secure_app
 
 @app.function(
     image=image,
-    volumes={"/models": models_volume},
+    volumes={PERSISTED_VOLUME_PATH: persisted_volume},
     timeout=1800,
 )
 def download_models():
     """Download and cache the ML models."""    
     from .download_models import download_models
     download_models("doclaynet")
-    
+    download_models("fast")
+
     print("Models downloaded successfully")
-    models_volume.commit()  # Commit the models to the volume
+    persisted_volume.commit()  # Commit the models to the volume
     return "Models downloaded and cached"
 
 @app.local_entrypoint()
@@ -137,8 +136,8 @@ def deploy():
     print()
     print("🔐 SECURITY SETUP:")
     print("1. Create API key: modal secret create pdf-document-secret API_KEY=your-secret-key")
-    print("2. Access API with: curl -H 'X-API-Key: your-secret-key' {url}/api/")
-    print("3. Health check (public): curl {url}/health")
+    print(f"2. Access API with: curl -X POST -F 'file=@input.pdf' -F 'fast=true' -H 'X-API-Key: your-secret-key' {fastapi_app.web_url}/api/")
+    print(f"3. Health check (public): curl {fastapi_app.web_url}/health")
 
 if __name__ == "__main__":
     print("Secure PDF Analysis API Deployment")

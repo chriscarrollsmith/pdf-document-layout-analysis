@@ -2,7 +2,7 @@ import torch
 from os.path import join
 from detectron2.config import get_cfg
 from detectron2.engine import default_setup, default_argument_parser
-from ..configuration import service_logger, SRC_PATH, ROOT_PATH
+from ..configuration import service_logger, SRC_PATH, MODELS_PATH
 from ..ditod import add_vit_config
 
 
@@ -34,9 +34,9 @@ def get_model_configuration():
     args.num_gpus = 1
     args.opts = [
         "MODEL.WEIGHTS",
-        join(ROOT_PATH, "models", "doclaynet_VGT_model.pth"),
+        join(MODELS_PATH, "doclaynet_VGT_model.pth"),
         "OUTPUT_DIR",
-        join(ROOT_PATH, "model_output_doclaynet"),
+        join(MODELS_PATH, "model_output_doclaynet"),
     ]
     args.debug = False
 

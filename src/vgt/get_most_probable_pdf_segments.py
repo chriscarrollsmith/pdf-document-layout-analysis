@@ -10,7 +10,7 @@ from ..pdf_features.PdfToken import PdfToken
 from ..pdf_features.Rectangle import Rectangle
 from ..pdf_token_type_labels.TokenType import TokenType
 from ..data_model.PdfImages import PdfImages
-from ..configuration import ROOT_PATH, DOCLAYNET_TYPE_BY_ID
+from ..configuration import SRC_PATH, JSONS_ROOT_PATH, DOCLAYNET_TYPE_BY_ID
 from ..data_model.Prediction import Prediction
 
 
@@ -32,10 +32,10 @@ def get_prediction_from_annotation(annotation, images_names, vgt_predictions_dic
 
 def get_vgt_predictions(model_name: str) -> dict[str, list[Prediction]]:
     output_dir: str = f"model_output_{model_name}"
-    model_output_json_path = join(str(ROOT_PATH), output_dir, "inference", "coco_instances_results.json")
+    model_output_json_path = join(str(SRC_PATH), output_dir, "inference", "coco_instances_results.json")
     annotations = json.loads(Path(model_output_json_path).read_text())
 
-    test_json_path = join(str(ROOT_PATH), "jsons", "test.json")
+    test_json_path = join(str(JSONS_ROOT_PATH), "test.json")
     coco_truth = json.loads(Path(test_json_path).read_text())
 
     images_names = {value["id"]: value["file_name"] for value in coco_truth["images"]}
