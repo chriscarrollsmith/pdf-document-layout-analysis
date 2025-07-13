@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from configuration import XMLS_PATH
+from ..configuration import XMLS_PATH
 
 
 def get_xml(xml_file_name: str) -> str:

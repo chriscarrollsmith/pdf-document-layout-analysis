@@ -1,8 +1,8 @@
 from fastapi import UploadFile
 
-from pdf_layout_analysis.run_pdf_layout_analysis import analyze_pdf
-from pdf_layout_analysis.run_pdf_layout_analysis_fast import analyze_pdf_fast
-from toc.extract_table_of_contents import extract_table_of_contents
+from ..pdf_layout_analysis.run_pdf_layout_analysis import analyze_pdf
+from ..pdf_layout_analysis.run_pdf_layout_analysis_fast import analyze_pdf_fast
+from .extract_table_of_contents import extract_table_of_contents
 
 
 def get_toc(file: UploadFile, fast: bool):

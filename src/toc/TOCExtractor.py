@@ -1,7 +1,7 @@
-from toc.MergeTwoSegmentsTitles import MergeTwoSegmentsTitles
-from toc.TitleFeatures import TitleFeatures
-from toc.data.TOCItem import TOCItem
-from toc.PdfSegmentation import PdfSegmentation
+from .MergeTwoSegmentsTitles import MergeTwoSegmentsTitles
+from .TitleFeatures import TitleFeatures
+from .data.TOCItem import TOCItem
+from .PdfSegmentation import PdfSegmentation
 
 
 class TOCExtractor:

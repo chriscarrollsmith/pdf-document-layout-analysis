@@ -1,12 +1,12 @@
 from os.path import join, exists
 from unittest import TestCase
 
-from pdf_token_type_labels.TokenType import TokenType
-from pdf_tokens_type_trainer.TokenTypeTrainer import TokenTypeTrainer
+from ...pdf_token_type_labels.TokenType import TokenType
+from ...pdf_tokens_type_trainer.TokenTypeTrainer import TokenTypeTrainer
 
-from pdf_features.PdfFeatures import PdfFeatures
+from ...pdf_features.PdfFeatures import PdfFeatures
 
-from configuration import ROOT_PATH
+from ...configuration import ROOT_PATH
 
 
 class TestTrainer(TestCase):

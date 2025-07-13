@@ -1,9 +1,8 @@
 from os.path import join
-from pathlib import Path
 from unittest import TestCase
 
-from configuration import ROOT_PATH
-from pdf_features.PdfFeatures import PdfFeatures
+from ...configuration import ROOT_PATH
+from ..PdfFeatures import PdfFeatures
 
 
 class TestPdfFeatures(TestCase):

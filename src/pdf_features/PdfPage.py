@@ -3,8 +3,8 @@ from typing import Optional
 from lxml.etree import ElementBase
 from pydantic import BaseModel
 
-from pdf_features.PdfFont import PdfFont
-from pdf_features.PdfToken import PdfToken
+from ..pdf_features.PdfFont import PdfFont
+from ..pdf_features.PdfToken import PdfToken
 
 
 class PdfPage(BaseModel):

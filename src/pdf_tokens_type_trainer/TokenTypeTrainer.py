@@ -3,10 +3,10 @@ from pathlib import Path
 import numpy as np
 from tqdm import tqdm
 
-from pdf_features.PdfToken import PdfToken
-from pdf_token_type_labels.TokenType import TokenType
-from pdf_tokens_type_trainer.PdfTrainer import PdfTrainer
-from pdf_tokens_type_trainer.TokenFeatures import TokenFeatures
+from ..pdf_features.PdfToken import PdfToken
+from ..pdf_token_type_labels.TokenType import TokenType
+from ..pdf_tokens_type_trainer.PdfTrainer import PdfTrainer
+from ..pdf_tokens_type_trainer.TokenFeatures import TokenFeatures
 
 
 class TokenTypeTrainer(PdfTrainer):

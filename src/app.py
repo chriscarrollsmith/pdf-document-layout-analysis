@@ -9,16 +9,16 @@ from fastapi.responses import PlainTextResponse
 from starlette.concurrency import run_in_threadpool
 from starlette.responses import FileResponse
 
-from catch_exceptions import catch_exceptions
-from configuration import service_logger, OCR_SOURCE
-from ocr.languages import supported_languages
-from ocr.ocr_pdf import ocr_pdf
-from pdf_layout_analysis.get_xml import get_xml
-from pdf_layout_analysis.run_pdf_layout_analysis import analyze_pdf
-from pdf_layout_analysis.run_pdf_layout_analysis_fast import analyze_pdf_fast
-from text_extraction.get_text_extraction import get_text_extraction
-from toc.get_toc import get_toc
-from visualization.get_visualization import get_visualization
+from .catch_exceptions import catch_exceptions
+from .configuration import service_logger, OCR_SOURCE
+from .ocr.languages import supported_languages
+from .ocr.ocr_pdf import ocr_pdf
+from .pdf_layout_analysis.get_xml import get_xml
+from .pdf_layout_analysis.run_pdf_layout_analysis import analyze_pdf
+from .pdf_layout_analysis.run_pdf_layout_analysis_fast import analyze_pdf_fast
+from .text_extraction.get_text_extraction import get_text_extraction
+from .toc.get_toc import get_toc
+from .visualization.get_visualization import get_visualization
 
 service_logger.info(f"Is PyTorch using GPU: {torch.cuda.is_available()}")
 

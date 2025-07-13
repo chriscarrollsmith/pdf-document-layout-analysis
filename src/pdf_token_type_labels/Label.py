@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from lxml.etree import ElementBase
 
-from pdf_features.Rectangle import Rectangle
+from ..pdf_features.Rectangle import Rectangle
 
 
 class Label(BaseModel):

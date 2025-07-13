@@ -1,7 +1,7 @@
 from os import makedirs
 from os.path import join
 from pdf_annotate import PdfAnnotator, Location, Appearance
-from configuration import ROOT_PATH
+from ..configuration import ROOT_PATH
 
 DOCLAYNET_COLOR_BY_TYPE = {
     "Caption": "#FFC300",

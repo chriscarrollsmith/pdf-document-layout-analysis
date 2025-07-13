@@ -1,11 +1,11 @@
 from lxml.etree import ElementBase
 from pydantic import BaseModel
 
-from pdf_features.PdfFont import PdfFont
-from pdf_features.PdfTokenContext import PdfTokenContext
-from pdf_features.Rectangle import Rectangle
-from pdf_token_type_labels.Label import Label
-from pdf_token_type_labels.TokenType import TokenType
+from ..pdf_features.PdfFont import PdfFont
+from ..pdf_features.PdfTokenContext import PdfTokenContext
+from ..pdf_features.Rectangle import Rectangle
+from ..pdf_token_type_labels.Label import Label
+from ..pdf_token_type_labels.TokenType import TokenType
 
 
 class PdfToken(BaseModel):

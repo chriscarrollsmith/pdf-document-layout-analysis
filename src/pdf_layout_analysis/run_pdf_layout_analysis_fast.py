@@ -1,17 +1,17 @@
 from os.path import join
 from typing import AnyStr
 
-from data_model.PdfImages import PdfImages
-from extraction_formats.extract_formula_formats import extract_formula_format
-from extraction_formats.extract_table_formats import extract_table_format
-from fast_trainer.ParagraphExtractorTrainer import ParagraphExtractorTrainer
-from fast_trainer.model_configuration import MODEL_CONFIGURATION as PARAGRAPH_EXTRACTION_CONFIGURATION
-from pdf_layout_analysis.run_pdf_layout_analysis import pdf_content_to_pdf_path
-from pdf_tokens_type_trainer.TokenTypeTrainer import TokenTypeTrainer
-from pdf_tokens_type_trainer.ModelConfiguration import ModelConfiguration
+from ..data_model.PdfImages import PdfImages
+from ..extraction_formats.extract_formula_formats import extract_formula_format
+from ..extraction_formats.extract_table_formats import extract_table_format
+from ..fast_trainer.ParagraphExtractorTrainer import ParagraphExtractorTrainer
+from ..fast_trainer.model_configuration import MODEL_CONFIGURATION as PARAGRAPH_EXTRACTION_CONFIGURATION
+from ..pdf_layout_analysis.run_pdf_layout_analysis import pdf_content_to_pdf_path
+from ..pdf_tokens_type_trainer.TokenTypeTrainer import TokenTypeTrainer
+from ..pdf_tokens_type_trainer.ModelConfiguration import ModelConfiguration
 
-from configuration import ROOT_PATH, service_logger
-from data_model.SegmentBox import SegmentBox
+from ..configuration import ROOT_PATH, service_logger
+from ..data_model.SegmentBox import SegmentBox
 
 
 def analyze_pdf_fast(

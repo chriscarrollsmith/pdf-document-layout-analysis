@@ -2,12 +2,12 @@ import os
 from os.path import join
 from pathlib import Path
 
-from pdf_features.Rectangle import Rectangle
-from pdf_token_type_labels.Label import Label
-from pdf_token_type_labels.PageLabels import PageLabels
-from pdf_token_type_labels.PdfLabels import PdfLabels
-from pdf_token_type_labels.TaskMistakesType import TaskMistakesType
-from pdf_tokens_type_trainer.config import LABELS_FILE_NAME, MISTAKES_RELATIVE_PATH, STATUS_FILE_NAME
+from ..pdf_features.Rectangle import Rectangle
+from ..pdf_token_type_labels.Label import Label
+from ..pdf_token_type_labels.PageLabels import PageLabels
+from ..pdf_token_type_labels.PdfLabels import PdfLabels
+from ..pdf_token_type_labels.TaskMistakesType import TaskMistakesType
+from ..pdf_tokens_type_trainer.config import LABELS_FILE_NAME, MISTAKES_RELATIVE_PATH, STATUS_FILE_NAME
 
 
 class TaskMistakes:

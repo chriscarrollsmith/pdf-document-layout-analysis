@@ -1,8 +1,7 @@
 from pathlib import Path
-
 import requests
 from unittest import TestCase
-from configuration import ROOT_PATH, SRC_PATH
+from .configuration import ROOT_PATH
 
 
 class TestEndToEnd(TestCase):

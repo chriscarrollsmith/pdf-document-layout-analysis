@@ -3,13 +3,13 @@ import uuid
 from os.path import join
 from pathlib import Path
 from typing import AnyStr
-from fast_trainer.PdfSegment import PdfSegment
-from pdf_features.PdfFeatures import PdfFeatures
-from pdf_features.Rectangle import Rectangle
-from pdf_token_type_labels.TokenType import TokenType
-from toc.TOCExtractor import TOCExtractor
-from configuration import service_logger
-from toc.PdfSegmentation import PdfSegmentation
+from ..fast_trainer.PdfSegment import PdfSegment
+from ..pdf_features.PdfFeatures import PdfFeatures
+from ..pdf_features.Rectangle import Rectangle
+from ..pdf_token_type_labels.TokenType import TokenType
+from .TOCExtractor import TOCExtractor
+from ..configuration import service_logger
+from .PdfSegmentation import PdfSegmentation
 
 TITLE_TYPES = {TokenType.TITLE, TokenType.SECTION_HEADER}
 SKIP_TYPES = {TokenType.TITLE, TokenType.SECTION_HEADER, TokenType.PAGE_HEADER, TokenType.PICTURE}

@@ -2,9 +2,9 @@ from pathlib import Path
 from tempfile import gettempdir
 from fastapi import UploadFile
 from starlette.responses import FileResponse
-from pdf_layout_analysis.run_pdf_layout_analysis import analyze_pdf
-from pdf_layout_analysis.run_pdf_layout_analysis_fast import analyze_pdf_fast
-from visualization.save_output_to_pdf import save_output_to_pdf
+from ..pdf_layout_analysis.run_pdf_layout_analysis import analyze_pdf
+from ..pdf_layout_analysis.run_pdf_layout_analysis_fast import analyze_pdf_fast
+from ..visualization.save_output_to_pdf import save_output_to_pdf
 from glob import glob
 from os.path import getctime, join
 

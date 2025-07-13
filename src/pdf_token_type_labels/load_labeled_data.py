@@ -1,8 +1,8 @@
 from os import listdir
 from os.path import join, isdir
 
-from pdf_features.PdfFeatures import PdfFeatures
-from pdf_tokens_type_trainer.config import TOKEN_TYPE_RELATIVE_PATH
+from ..pdf_features.PdfFeatures import PdfFeatures
+from ..pdf_tokens_type_trainer.config import TOKEN_TYPE_RELATIVE_PATH
 
 
 def loop_datasets(token_type_labeled_data_path: str, filter_in: str):

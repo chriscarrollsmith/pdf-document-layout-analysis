@@ -1,5 +1,4 @@
 import math
-from fileinput import filename
 from os import makedirs
 from os.path import join, exists
 from pathlib import Path
@@ -51,7 +50,7 @@ def download_lightgbm_models():
     download_from_hf_hub(Path(MODELS_PATH, "config.json"))
 
 
-def download_models(model_name: str):
+def download_models(model_name: str = "doclaynet"):
     makedirs(MODELS_PATH, exist_ok=True)
     if model_name == "fast":
         download_lightgbm_models()

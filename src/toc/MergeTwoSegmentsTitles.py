@@ -1,5 +1,5 @@
-from toc.TitleFeatures import TitleFeatures
-from toc.PdfSegmentation import PdfSegmentation
+from .TitleFeatures import TitleFeatures
+from .PdfSegmentation import PdfSegmentation
 
 
 class MergeTwoSegmentsTitles:

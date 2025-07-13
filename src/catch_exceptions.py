@@ -1,7 +1,7 @@
 from functools import wraps
 from fastapi import HTTPException
 
-from configuration import service_logger
+from .configuration import service_logger
 
 
 def catch_exceptions(func):

@@ -3,8 +3,8 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from configuration import OCR_SOURCE, OCR_OUTPUT, OCR_FAILED
-from ocr.languages import iso_to_tesseract
+from ..configuration import OCR_SOURCE, OCR_OUTPUT, OCR_FAILED
+from ..ocr.languages import iso_to_tesseract
 
 
 def get_paths(namespace: str, pdf_file_name: str):

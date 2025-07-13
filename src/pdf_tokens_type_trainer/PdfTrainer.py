@@ -5,13 +5,13 @@ from pathlib import Path
 import lightgbm as lgb
 import numpy as np
 
-from pdf_features.PdfFeatures import PdfFeatures
-from pdf_features.PdfFont import PdfFont
-from pdf_features.PdfToken import PdfToken
-from pdf_features.Rectangle import Rectangle
-from pdf_token_type_labels.TokenType import TokenType
-from pdf_tokens_type_trainer.ModelConfiguration import ModelConfiguration
-from pdf_tokens_type_trainer.download_models import pdf_tokens_type_model
+from ..pdf_features.PdfFeatures import PdfFeatures
+from ..pdf_features.PdfFont import PdfFont
+from ..pdf_features.PdfToken import PdfToken
+from ..pdf_features.Rectangle import Rectangle
+from ..pdf_token_type_labels.TokenType import TokenType
+from ..pdf_tokens_type_trainer.ModelConfiguration import ModelConfiguration
+from ..pdf_tokens_type_trainer.download_models import pdf_tokens_type_model
 
 
 class PdfTrainer:

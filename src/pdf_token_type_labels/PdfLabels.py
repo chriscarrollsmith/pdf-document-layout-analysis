@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
-from pdf_features.Rectangle import Rectangle
-from pdf_token_type_labels.PageLabels import PageLabels
+from ..pdf_features.Rectangle import Rectangle
+from ..pdf_token_type_labels.PageLabels import PageLabels
 
 
 class PdfLabels(BaseModel):

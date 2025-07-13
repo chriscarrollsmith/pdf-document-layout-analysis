@@ -1,9 +1,9 @@
 import json
 from os import makedirs
-from pdf_features.PdfToken import PdfToken
-from data_model.PdfImages import PdfImages
-from configuration import DOCLAYNET_TYPE_BY_ID
-from configuration import JSONS_ROOT_PATH, JSON_TEST_FILE_PATH
+from ..pdf_features.PdfToken import PdfToken
+from ..data_model.PdfImages import PdfImages
+from ..configuration import DOCLAYNET_TYPE_BY_ID
+from ..configuration import JSONS_ROOT_PATH, JSON_TEST_FILE_PATH
 
 
 def save_annotations_json(annotations: list, width_height: list, images: list):

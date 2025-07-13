@@ -11,13 +11,13 @@ from lxml import etree
 from lxml.etree import ElementBase, XMLSyntaxError
 from pydantic import BaseModel
 
-from pdf_features.PdfFont import PdfFont
-from pdf_features.PdfModes import PdfModes
-from pdf_features.PdfPage import PdfPage
-from pdf_features.PdfToken import PdfToken
-from pdf_token_type_labels.PdfLabels import PdfLabels
-from pdf_token_type_labels.TokenType import TokenType
-from pdf_tokens_type_trainer.config import (
+from ..pdf_features.PdfFont import PdfFont
+from ..pdf_features.PdfModes import PdfModes
+from ..pdf_features.PdfPage import PdfPage
+from ..pdf_features.PdfToken import PdfToken
+from ..pdf_token_type_labels.PdfLabels import PdfLabels
+from ..pdf_token_type_labels.TokenType import TokenType
+from ..pdf_tokens_type_trainer.config import (
     XML_NAME,
     LABELS_FILE_NAME,
     TOKEN_TYPE_RELATIVE_PATH,
