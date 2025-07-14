@@ -1,5 +1,5 @@
 import modal
-from .configuration import MODELS_PATH, PERSISTED_VOLUME_PATH
+from .configuration import PERSISTED_VOLUME_PATH
 
 # Create the Modal app
 app = modal.App("pdf-document-layout-analysis-secure")
@@ -136,7 +136,7 @@ def deploy():
     print()
     print("🔐 SECURITY SETUP:")
     print("1. Create API key: modal secret create pdf-document-secret API_KEY=your-secret-key")
-    print(f"2. Access API with: curl -X POST -F 'file=@input.pdf' -F 'fast=true' -H 'X-API-Key: your-secret-key' {fastapi_app.web_url}/api/")
+    print(f"2. Access API with: curl -X POST -F \"file=@input.pdf\" -F \"fast=true\" -H \"X-API-Key: $API_KEY\" {fastapi_app.web_url}/api/")
     print(f"3. Health check (public): curl {fastapi_app.web_url}/health")
 
 if __name__ == "__main__":
@@ -145,4 +145,6 @@ if __name__ == "__main__":
     print("  modal deploy modal_deployment_with_auth.py")
     print()
     print("Setup API key:")
-    print("  modal secret create pdf-document-secret API_KEY=$(openssl rand -hex 32)") 
+    print("  export API_KEY=(openssl rand -hex 32)")
+    print("  echo $API_KEY  # Save this key securely!")
+    print("  modal secret create pdf-document-secret API_KEY=$API_KEY") 
