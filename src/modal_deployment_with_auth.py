@@ -24,6 +24,7 @@ image = (
     )
     .pip_install_from_pyproject("pyproject.toml")
     .pip_install("git+https://github.com/facebookresearch/detectron2.git@70f454304e1a38378200459dd2dbca0f0f4a5ab4")
+    .pip_install("pycocotools==2.0.8")
 )
 
 @app.function(
