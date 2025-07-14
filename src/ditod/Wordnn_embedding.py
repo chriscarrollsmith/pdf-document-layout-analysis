@@ -25,7 +25,7 @@ class WordnnEmbedding(nn.Module):
         vocab_size=30552,
         hidden_size=768,
         embedding_dim=64,
-        bros_embedding_path="layoutlm-base-uncased",
+        bros_embedding_path="bros-base-uncased",
         use_pretrain_weight=True,
         use_UNK_text=False,
     ):
