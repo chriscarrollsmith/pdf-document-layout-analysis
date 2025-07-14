@@ -16,6 +16,7 @@
 
 
 import collections
+import six
 
 from transformers.models.bert.tokenization_bert import BertTokenizer
 from transformers.utils import logging
