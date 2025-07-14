@@ -22,7 +22,7 @@ class WordnnEmbedding(nn.Module):
 
     def __init__(
         self,
-        vocab_size=30552,
+        vocab_size=30522,
         hidden_size=768,
         embedding_dim=64,
         bros_embedding_path="bros-base-uncased",
@@ -53,7 +53,8 @@ class WordnnEmbedding(nn.Module):
         print(f"Loading weights from {self.bros_embedding_path}")
         state_dict = torch.load(
             Path(MODELS_PATH, self.bros_embedding_path) / "pytorch_model.bin", 
-            map_location="cpu"
+            map_location="cpu",
+            weights_only=True
         )
 
         if "bert" in self.bros_embedding_path:
@@ -65,7 +66,31 @@ class WordnnEmbedding(nn.Module):
         else:
             raise ValueError(f"Unsupported model path: {self.bros_embedding_path}")
 
-        self.embedding.load_state_dict({"weight": word_embs})
+        # Get current model device and move weights to it
+        device = next(self.parameters()).device
+        word_embs = word_embs.to(device)
+
+        # Handle size mismatch by padding or truncating
+        current_vocab_size = self.embedding.num_embeddings
+        loaded_vocab_size = word_embs.size(0)
+        
+        if loaded_vocab_size != current_vocab_size:
+            print(f"Vocab size mismatch: loaded {loaded_vocab_size}, expected {current_vocab_size}")
+            if loaded_vocab_size < current_vocab_size:
+                # Pad with random embeddings for the extra tokens
+                extra_embeddings = torch.randn(
+                    current_vocab_size - loaded_vocab_size, 
+                    word_embs.size(1)
+                ).to(device) * 0.02  # Small random initialization
+                word_embs = torch.cat([word_embs, extra_embeddings], dim=0)
+            else:
+                # Truncate if somehow we have too many
+                word_embs = word_embs[:current_vocab_size]
+        
+        # Update the existing embedding layer's weights instead of replacing it
+        with torch.no_grad():
+            self.embedding.weight.copy_(word_embs)
+        
         self.weights_loaded = True
 
     def forward(self, img, batched_inputs, stride=1):
