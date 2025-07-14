@@ -135,7 +135,7 @@ def get_most_probable_pdf_segments(model_name: str, pdf_images_list: list[PdfIma
             page_segments = get_pdf_segments_for_page(page, pdf_features.file_name, page_pdf_name, vgt_predictions_dict)
             most_probable_pdf_segments.extend(page_segments)
     if save_output:
-        save_path = join(ROOT_PATH, f"model_output_{model_name}", "predicted_segments.pickle")
+        save_path = join(SRC_PATH, f"model_output_{model_name}", "predicted_segments.pickle")
         with open(save_path, mode="wb") as file:
             pickle.dump(most_probable_pdf_segments, file)
     return most_probable_pdf_segments
