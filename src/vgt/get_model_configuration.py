@@ -29,14 +29,14 @@ def is_gpu_available():
 def get_model_configuration():
     parser = default_argument_parser()
     args, unknown = parser.parse_known_args()
-    args.config_file = join(SRC_PATH, "model_configuration", f"doclaynet_VGT_cascade_PTM.yaml")
+    args.config_file = join(SRC_PATH, "model_configuration", "doclaynet_VGT_cascade_PTM.yaml")
     args.eval_only = True
     args.num_gpus = 1
     args.opts = [
         "MODEL.WEIGHTS",
         join(MODELS_PATH, "doclaynet_VGT_model.pth"),
         "OUTPUT_DIR",
-        join(MODELS_PATH, "model_output_doclaynet"),
+        join(SRC_PATH, "model_output_doclaynet"),
     ]
     args.debug = False
 
