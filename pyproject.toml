@@ -32,6 +32,7 @@ dependencies = [
     "struct_eqtable @ git+https://github.com/UniModal4Reasoning/StructEqTable-Deploy.git@fd06078bfa9364849eb39330c075dd63cbed73ff",
     "modal>=1.0.5",
     "pycocotools>=2.0.10",
+    "six>=1.17.0",
 ]
 
 [project.urls]
