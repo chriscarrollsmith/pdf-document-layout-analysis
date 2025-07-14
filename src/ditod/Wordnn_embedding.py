@@ -2,6 +2,8 @@ import numpy as np
 import torch
 from torch import nn
 from .tokenization_bros import BrosTokenizer
+from ..configuration import MODELS_PATH
+from pathlib import Path
 
 
 def _init_weights(m):
@@ -23,7 +25,7 @@ class WordnnEmbedding(nn.Module):
         vocab_size=30552,
         hidden_size=768,
         embedding_dim=64,
-        bros_embedding_path="/models/layoutlm-base-uncased/",  # Use absolute path
+        bros_embedding_path="layoutlm-base-uncased",
         use_pretrain_weight=True,
         use_UNK_text=False,
     ):
@@ -47,13 +49,13 @@ class WordnnEmbedding(nn.Module):
         """Lazily load weights when needed"""
         if not self.use_pretrain_weight or self.weights_loaded:
             return
-            
+
         print(f"Loading weights from {self.bros_embedding_path}")
         state_dict = torch.load(
-            self.bros_embedding_path + "pytorch_model.bin", 
+            Path(MODELS_PATH, self.bros_embedding_path) / "pytorch_model.bin", 
             map_location="cpu"
         )
-        
+
         if "bert" in self.bros_embedding_path:
             word_embs = state_dict["bert.embeddings.word_embeddings.weight"]
         elif "bros" in self.bros_embedding_path:
@@ -62,7 +64,7 @@ class WordnnEmbedding(nn.Module):
             word_embs = state_dict["layoutlm.embeddings.word_embeddings.weight"]
         else:
             raise ValueError(f"Unsupported model path: {self.bros_embedding_path}")
-        
+
         self.embedding.load_state_dict({"weight": word_embs})
         self.weights_loaded = True
 

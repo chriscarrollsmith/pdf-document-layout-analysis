@@ -18,7 +18,7 @@ OCR_SOURCE = Path(SRC_PATH, "ocr", "source")
 OCR_OUTPUT = Path(SRC_PATH, "ocr", "output")
 OCR_FAILED = Path(SRC_PATH, "ocr", "failed")
 JSON_TEST_FILE_PATH = Path(JSONS_ROOT_PATH, "test.json")
-MODELS_PATH = Path(PERSISTED_VOLUME_PATH, "models")
+MODELS_PATH = Path(SRC_PATH, PERSISTED_VOLUME_PATH, "models")
 XMLS_PATH = Path(SRC_PATH, "xmls")
 
 DOCLAYNET_TYPE_BY_ID = {
