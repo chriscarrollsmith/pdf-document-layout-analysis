@@ -1,6 +1,6 @@
 
 <h3 align="center">PDF Document Layout Analysis</h3>
-<p align="center">A Docker-powered service for PDF document layout analysis and PDF OCR</p>
+<p align="center">A Modal-powered service for PDF document layout analysis and PDF OCR</p>
 
 ---
 This project provides a powerful and flexible PDF analysis service. The service enables OCR, 
