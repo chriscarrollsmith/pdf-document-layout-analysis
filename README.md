@@ -116,15 +116,53 @@ Both models return identical response format - a list of `SegmentBox` elements:
 
 ```json
 {
-    "left": "Left position of the segment",
-    "top": "Top position of the segment", 
-    "width": "Width of the segment",
-    "height": "Height of the segment",
-    "page_number": "Page number which the segment belongs to",
-    "page_width": "Width of the page which the segment belongs to",
-    "page_height": "Height of the page which the segment belongs to",
-    "text": "Text inside the segment",
-    "type": "Type of the segment (see categories below)"
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "left": {
+        "type": "number",
+        "description": "The horizontal position of the element's left edge in points from the page's left edge"
+      },
+      "top": {
+        "type": "number", 
+        "description": "The vertical position of the element's top edge in points from the page's top edge"
+      },
+      "width": {
+        "type": "number",
+        "description": "The width of the element in points"
+      },
+      "height": {
+        "type": "number",
+        "description": "The height of the element in points"
+      },
+      "page_number": {
+        "type": "integer",
+        "description": "The 1-based page number where this element appears"
+      },
+      "page_width": {
+        "type": "integer",
+        "description": "The total width of the page in points"
+      },
+      "page_height": {
+        "type": "integer",
+        "description": "The total height of the page in points"
+      },
+      "text": {
+        "type": "string",
+        "description": "The textual content extracted from this document element"
+      },
+      "type": {
+        "type": "string",
+        "description": "The classification type of this element (e.g., 'Page header')"
+      }
+    },
+    "required": [
+      "left", "top", "width", "height",
+      "page_number", "page_width", "page_height", 
+      "text", "type"
+    ]
+  }
 }
 ```
 
